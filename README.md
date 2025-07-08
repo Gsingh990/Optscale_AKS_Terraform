@@ -60,7 +60,7 @@ This project provisions the following resources:
 -   An Azure Storage Account
 -   An Azure Key Vault for storing secrets
 -   An Azure Bastion Service for secure access to VMs within the VNet
--   A Bastion Host VM (for demonstration/alternative access, though Azure Bastion Service is preferred)
+-   A Bastion Host VM
 
 ## Security
 
@@ -69,40 +69,60 @@ This project provisions the following resources:
 -   Azure Policy is enforced to prevent public IPs on network interfaces, ensuring a secure network posture.
 -   Azure Bastion Service provides secure and seamless RDP/SSH connectivity to your virtual machines directly from the Azure portal over SSL, without exposing them to the public internet.
 
-## Deploying Kubernetes Applications
+## Deploying Kubernetes Applications from the Bastion Host
 
-Due to the private AKS cluster, direct `kubectl` access from outside the Azure Virtual Network is not possible. To deploy Kubernetes applications (like the `optscale_kubernetes_app` module), you need to do so from within the virtual network.
+Due to the private AKS cluster, direct `kubectl` access from outside the Azure Virtual Network is not possible. To deploy Kubernetes applications (like the `optscale_kubernetes_app` module), you need to do so from within the virtual network, typically from the Bastion Host VM.
 
-1.  **Connect to a VM via Azure Bastion:**
+1.  **Connect to the Bastion Host VM via Azure Bastion:**
 
-    You can use the Azure Bastion Service to securely connect to any VM within your virtual network (e.g., the `optscale-db-vm` or any other jumpbox/bastion VM you provision).
+    You can use the Azure Bastion Service to securely connect to the Bastion Host VM. This VM is located within your virtual network and has the necessary network access to the private AKS cluster.
 
     *   Navigate to the Azure portal.
-    *   Go to the Virtual Machine you wish to connect to.
+    *   Go to the Virtual Machine resource for your Bastion Host (e.g., `optscale-bastion`).
     *   Click on the "Connect" button and select "Bastion".
-    *   Provide your `admin_username` and `admin_password` (or SSH private key) to establish the connection.
+    *   Provide your `admin_username` and `admin_password` (or SSH private key) to establish the connection. This will open a shell session in your browser.
 
-2.  **Configure `kubectl` on the connected VM:**
+2.  **Ensure Terraform and Azure CLI are installed on the Bastion Host:**
 
-    Once connected to a VM within the VNet, you can configure `kubectl` to interact with your private AKS cluster. Run the following Azure CLI command on the VM:
+    If not already installed, you will need to install Terraform and Azure CLI on the Bastion Host VM. You can typically do this using the VM's package manager (e.g., `sudo apt-get install terraform azure-cli` for Ubuntu).
+
+3.  **Clone the OptScale project repository on the Bastion Host:**
+
+    ```bash
+    git clone <repository-url>
+    cd optscale-aks-deployment
+    ```
+
+4.  **Configure Terraform variables on the Bastion Host:**
+
+    Set the necessary environment variables for Terraform on the Bastion Host, just as you would on your local machine:
+
+    ```bash
+    export TF_VAR_tenant_id="<your-tenant-id>"
+    export TF_VAR_agent_object_id="<your-agent-object-id>"
+    export TF_VAR_db_admin_password="<YourSecureDbPassword!123>"
+    export TF_VAR_bastion_admin_password="<YourBastionPassword!123>"
+    ```
+
+5.  **Configure `kubectl` on the Bastion Host:**
+
+    Run the following Azure CLI command on the Bastion Host VM to configure `kubectl` to interact with your private AKS cluster:
 
     ```bash
     az aks get-credentials --resource-group <your-resource-group-name> --name <your-aks-cluster-name> --overwrite-existing
     ```
 
-3.  **Apply Kubernetes manifests:**
+6.  **Deploy the OptScale Kubernetes Application:**
 
-    From the connected VM, you can now apply your Kubernetes manifests or run Terraform to deploy the `optscale_kubernetes_app` module:
+    From the `optscale-aks-deployment` directory on the Bastion Host, run Terraform to deploy the `optscale_kubernetes_app` module:
 
     ```bash
-    # If using Terraform for Kubernetes deployments
-    cd /path/to/your/optscale_aks_deployment
     terraform init
     terraform apply
     ```
 
-    Alternatively, if you have raw Kubernetes YAML files:
+    Alternatively, if you have raw Kubernetes YAML files for the OptScale application, you can apply them directly:
 
     ```bash
-    kubectl apply -f your-app-manifests.yaml
+    kubectl apply -f your-optscale-app-manifests.yaml
     ```
