@@ -29,10 +29,14 @@ variable "db_admin_login" {
   type        = string
 }
 
-variable "db_admin_password" {
-  description = "The admin password for the database VM and PostgreSQL."
+variable "key_vault_id" {
+  description = "The ID of the Key Vault containing the database password."
   type        = string
-  sensitive   = true
+}
+
+variable "db_password_secret_name" {
+  description = "The name of the secret containing the database password."
+  type        = string
 }
 
 variable "tags" {

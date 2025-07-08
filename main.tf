@@ -15,6 +15,8 @@ module "aks_networking" {
   aks_subnet_address_prefixes = var.aks_subnet_address_prefixes
   db_subnet_name      = var.db_subnet_name
   db_subnet_address_prefixes  = var.db_subnet_address_prefixes
+  bastion_subnet_name = var.bastion_subnet_name
+  bastion_subnet_address_prefixes = var.bastion_subnet_address_prefixes
   tags                = var.tags
 }
 
@@ -36,6 +38,28 @@ module "aks_cluster" {
   tags                = var.tags
 }
 
+module "bastion_host" {
+  source = "./modules/bastion_host"
+
+  resource_group_name = azurerm_resource_group.optscale_rg.name
+  location            = azurerm_resource_group.optscale_rg.location
+  subnet_id           = module.aks_networking.bastion_subnet_id
+  admin_username      = var.bastion_admin_username
+  admin_password      = var.bastion_admin_password
+  tags                = var.tags
+}
+
+module "key_vault" {
+  source = "./modules/key_vault"
+
+  key_vault_name      = var.key_vault_name
+  location            = azurerm_resource_group.optscale_rg.location
+  resource_group_name = azurerm_resource_group.optscale_rg.name
+  tenant_id           = var.tenant_id
+  agent_object_id     = var.agent_object_id
+  db_admin_password   = var.db_admin_password
+}
+
 module "optscale_db_vm" {
   source = "./modules/optscale_db_vm"
 
@@ -43,7 +67,8 @@ module "optscale_db_vm" {
   location            = azurerm_resource_group.optscale_rg.location
   db_subnet_id        = module.aks_networking.db_subnet_id
   db_admin_login      = var.db_admin_login
-  db_admin_password   = var.db_admin_password
+  key_vault_id        = module.key_vault.key_vault_id
+  db_password_secret_name = module.key_vault.db_password_secret_name
   db_vm_size          = var.db_vm_size
   tags                = var.tags
 }
@@ -73,7 +98,7 @@ module "optscale_kubernetes_app" {
   db_host             = module.optscale_db_vm.db_server_fqdn
   db_name             = module.optscale_db_vm.db_name
   db_user             = module.optscale_db_vm.db_admin_login
-  db_password         = module.optscale_db_vm.db_admin_password
+  db_password         = module.key_vault.db_password_secret_name
   redis_host          = module.optscale_cache.redis_host_name
   redis_password      = module.optscale_cache.redis_primary_access_key
   storage_account_name = module.optscale_storage.storage_account_name

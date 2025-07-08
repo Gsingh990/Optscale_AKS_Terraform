@@ -1,3 +1,8 @@
+data "azurerm_key_vault_secret" "db_password" {
+  name         = var.db_password_secret_name
+  key_vault_id = var.key_vault_id
+}
+
 resource "azurerm_network_interface" "db_vm_nic" {
   name                = "${var.db_vm_name}-nic"
   location            = var.location
@@ -16,7 +21,7 @@ resource "azurerm_linux_virtual_machine" "db_vm" {
   location            = var.location
   size                = var.db_vm_size
   admin_username      = var.db_admin_login
-  admin_password      = var.db_admin_password
+  admin_password      = data.azurerm_key_vault_secret.db_password.value
   disable_password_authentication = false
   network_interface_ids = [
     azurerm_network_interface.db_vm_nic.id,
@@ -45,7 +50,7 @@ resource "azurerm_virtual_machine_extension" "install_postgres" {
     commandToExecute = <<-EOF
       sudo apt-get update
       sudo apt-get install -y postgresql postgresql-contrib
-      sudo -u postgres psql -c "CREATE USER ${var.db_admin_login} WITH PASSWORD '${var.db_admin_password}';"
+      sudo -u postgres psql -c "CREATE USER ${var.db_admin_login} WITH PASSWORD '${data.azurerm_key_vault_secret.db_password.value}';"
       sudo -u postgres psql -c "CREATE DATABASE optscale OWNER ${var.db_admin_login};"
       sudo sed -i "s/#listen_addresses = 'localhost'/listen_addresses = '*'/g" /etc/postgresql/14/main/postgresql.conf
       echo "host all all 0.0.0.0/0 md5" | sudo tee -a /etc/postgresql/14/main/pg_hba.conf

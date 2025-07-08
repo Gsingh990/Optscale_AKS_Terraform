@@ -1,17 +1,14 @@
-
 output "db_server_fqdn" {
-  value = azurerm_network_interface.db_vm_nic.private_ip_address
+  description = "The fully qualified domain name of the database server."
+  value       = azurerm_linux_virtual_machine.db_vm.private_ip_address
 }
 
 output "db_name" {
-  value = "optscale"
+  description = "The name of the database."
+  value       = "optscale"
 }
 
 output "db_admin_login" {
-  value = var.db_admin_login
-}
-
-output "db_admin_password" {
-  value = var.db_admin_password
-  sensitive = true
+  description = "The admin username for the database."
+  value       = var.db_admin_login
 }

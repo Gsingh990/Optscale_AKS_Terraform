@@ -135,3 +135,44 @@ variable "db_subnet_address_prefixes" {
   type        = list(string)
   default     = ["10.20.2.0/24"]
 }
+
+# Key Vault Variables
+variable "key_vault_name" {
+  description = "The name of the Key Vault."
+  type        = string
+}
+
+variable "tenant_id" {
+  description = "The tenant ID for the Key Vault."
+  type        = string
+}
+
+variable "agent_object_id" {
+  description = "The object ID of the service principal or user that will access the Key Vault."
+  type        = string
+}
+
+# Bastion Host Variables
+variable "bastion_subnet_name" {
+  description = "The name of the subnet for the bastion host."
+  type        = string
+  default     = "snet-bastion"
+}
+
+variable "bastion_subnet_address_prefixes" {
+  description = "The address prefixes for the bastion host subnet."
+  type        = list(string)
+  default     = ["10.20.3.0/24"]
+}
+
+variable "bastion_admin_username" {
+  description = "The administrator username for the bastion host."
+  type        = string
+  default     = "azureuser"
+}
+
+variable "bastion_admin_password" {
+  description = "The administrator password for the bastion host."
+  type        = string
+  sensitive   = true
+}

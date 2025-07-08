@@ -44,3 +44,14 @@ redis_cache_sku  = "Basic"
 storage_account_name = "optscalestorage"
 
 optscale_version = "3.0.0"
+
+# Key Vault Variables
+key_vault_name  = "optscale-kv-new"
+tenant_id       = "ff355289-721e-4dd7-a663-afec62ab9d54"
+agent_object_id = "94452bde-a4a8-4968-9998-1b7050706199"
+
+# Bastion Host Variables
+bastion_subnet_name = "snet-bastion"
+bastion_subnet_address_prefixes = ["10.20.3.0/24"]
+bastion_admin_username = "azureuser"
+bastion_admin_password = "YourBastionPassword!123"
