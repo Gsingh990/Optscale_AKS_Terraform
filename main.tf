@@ -45,7 +45,16 @@ module "bastion_host" {
   location            = azurerm_resource_group.optscale_rg.location
   subnet_id           = module.aks_networking.bastion_subnet_id
   admin_username      = var.bastion_admin_username
-  admin_password      = var.bastion_admin_password
+  admin_public_key      = var.bastion_admin_public_key
+  tags                = var.tags
+}
+
+module "azure_bastion" {
+  source = "./modules/azure_bastion"
+
+  resource_group_name = azurerm_resource_group.optscale_rg.name
+  location            = azurerm_resource_group.optscale_rg.location
+  vnet_name           = var.vnet_name
   tags                = var.tags
 }
 

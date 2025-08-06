@@ -31,10 +31,9 @@ variable "admin_username" {
   default     = "azureuser"
 }
 
-variable "admin_password" {
-  description = "The administrator password for the bastion host."
+variable "admin_public_key" {
+  description = "The administrator public key for the bastion host."
   type        = string
-  sensitive   = true
 }
 
 variable "tags" {

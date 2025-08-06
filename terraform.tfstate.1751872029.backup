@@ -1,0 +1,625 @@
+{
+  "version": 4,
+  "terraform_version": "1.12.2",
+  "serial": 78,
+  "lineage": "c6ca1822-5ab7-8f41-9689-12cb19ba3abf",
+  "outputs": {},
+  "resources": [
+    {
+      "mode": "managed",
+      "type": "azurerm_resource_group",
+      "name": "optscale_rg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/3c42098f-375b-47ae-9727-1b0014b0d232/resourceGroups/rg-optscale-deployment",
+            "location": "westus2",
+            "managed_by": "",
+            "name": "rg-optscale-deployment",
+            "tags": {
+              "environment": "prod",
+              "project": "optscale"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjo1NDAwMDAwMDAwMDAwLCJkZWxldGUiOjU0MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjo1NDAwMDAwMDAwMDAwfX0="
+        }
+      ]
+    },
+    {
+      "module": "module.aks_cluster",
+      "mode": "data",
+      "type": "azurerm_client_config",
+      "name": "current",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "client_id": "04b07795-8ddb-461a-bbee-02f9e1bf7b46",
+            "id": "Y2xpZW50Q29uZmlncy9jbGllbnRJZD0wNGIwNzc5NS04ZGRiLTQ2MWEtYmJlZS0wMmY5ZTFiZjdiNDY7b2JqZWN0SWQ9OTQ0NTJiZGUtYTRhOC00OTY4LTk5OTgtMWI3MDUwNzA2MTk5O3N1YnNjcmlwdGlvbklkPTNjNDIwOThmLTM3NWItNDdhZS05NzI3LTFiMDAxNGIwZDIzMjt0ZW5hbnRJZD1mZjM1NTI4OS03MjFlLTRkZDctYTY2My1hZmVjNjJhYjlkNTQ=",
+            "object_id": "94452bde-a4a8-4968-9998-1b7050706199",
+            "subscription_id": "3c42098f-375b-47ae-9727-1b0014b0d232",
+            "tenant_id": "ff355289-721e-4dd7-a663-afec62ab9d54",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0
+        }
+      ]
+    },
+    {
+      "module": "module.aks_networking",
+      "mode": "managed",
+      "type": "azurerm_network_security_group",
+      "name": "aks_nsg",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/3c42098f-375b-47ae-9727-1b0014b0d232/resourceGroups/rg-optscale-deployment/providers/Microsoft.Network/networkSecurityGroups/snet-optscale-aks-nodes-nsg",
+            "location": "westus2",
+            "name": "snet-optscale-aks-nodes-nsg",
+            "resource_group_name": "rg-optscale-deployment",
+            "security_rule": [],
+            "tags": {
+              "environment": "prod",
+              "project": "optscale"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIwIn0=",
+          "dependencies": [
+            "azurerm_resource_group.optscale_rg"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.aks_networking",
+      "mode": "managed",
+      "type": "azurerm_subnet",
+      "name": "aks_subnet",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address_prefixes": [
+              "10.20.1.0/24"
+            ],
+            "default_outbound_access_enabled": true,
+            "delegation": [],
+            "enforce_private_link_endpoint_network_policies": false,
+            "enforce_private_link_service_network_policies": false,
+            "id": "/subscriptions/3c42098f-375b-47ae-9727-1b0014b0d232/resourceGroups/rg-optscale-deployment/providers/Microsoft.Network/virtualNetworks/vnet-optscale-aks/subnets/snet-optscale-aks-nodes",
+            "name": "snet-optscale-aks-nodes",
+            "private_endpoint_network_policies": "Enabled",
+            "private_endpoint_network_policies_enabled": true,
+            "private_link_service_network_policies_enabled": true,
+            "resource_group_name": "rg-optscale-deployment",
+            "service_endpoint_policy_ids": [],
+            "service_endpoints": [
+              "Microsoft.ContainerRegistry",
+              "Microsoft.Storage"
+            ],
+            "timeouts": null,
+            "virtual_network_name": "vnet-optscale-aks"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.optscale_rg",
+            "module.aks_networking.azurerm_virtual_network.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.aks_networking",
+      "mode": "managed",
+      "type": "azurerm_subnet",
+      "name": "db_subnet",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "address_prefixes": [
+              "10.20.2.0/24"
+            ],
+            "default_outbound_access_enabled": true,
+            "delegation": [],
+            "enforce_private_link_endpoint_network_policies": false,
+            "enforce_private_link_service_network_policies": false,
+            "id": "/subscriptions/3c42098f-375b-47ae-9727-1b0014b0d232/resourceGroups/rg-optscale-deployment/providers/Microsoft.Network/virtualNetworks/vnet-optscale-aks/subnets/snet-optscale-db",
+            "name": "snet-optscale-db",
+            "private_endpoint_network_policies": "Enabled",
+            "private_endpoint_network_policies_enabled": true,
+            "private_link_service_network_policies_enabled": true,
+            "resource_group_name": "rg-optscale-deployment",
+            "service_endpoint_policy_ids": [],
+            "service_endpoints": [],
+            "timeouts": null,
+            "virtual_network_name": "vnet-optscale-aks"
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.optscale_rg",
+            "module.aks_networking.azurerm_virtual_network.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.aks_networking",
+      "mode": "managed",
+      "type": "azurerm_subnet_network_security_group_association",
+      "name": "aks_subnet_nsg_association",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "id": "/subscriptions/3c42098f-375b-47ae-9727-1b0014b0d232/resourceGroups/rg-optscale-deployment/providers/Microsoft.Network/virtualNetworks/vnet-optscale-aks/subnets/snet-optscale-aks-nodes",
+            "network_security_group_id": "/subscriptions/3c42098f-375b-47ae-9727-1b0014b0d232/resourceGroups/rg-optscale-deployment/providers/Microsoft.Network/networkSecurityGroups/snet-optscale-aks-nodes-nsg",
+            "subnet_id": "/subscriptions/3c42098f-375b-47ae-9727-1b0014b0d232/resourceGroups/rg-optscale-deployment/providers/Microsoft.Network/virtualNetworks/vnet-optscale-aks/subnets/snet-optscale-aks-nodes",
+            "timeouts": null
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMH19",
+          "dependencies": [
+            "azurerm_resource_group.optscale_rg",
+            "module.aks_networking.azurerm_network_security_group.aks_nsg",
+            "module.aks_networking.azurerm_subnet.aks_subnet",
+            "module.aks_networking.azurerm_virtual_network.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.optscale_cache",
+      "mode": "managed",
+      "type": "azurerm_redis_cache",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 1,
+          "attributes": {
+            "capacity": 0,
+            "enable_non_ssl_port": false,
+            "family": "C",
+            "hostname": "optscale-redis-cache-new.redis.cache.windows.net",
+            "id": "/subscriptions/3c42098f-375b-47ae-9727-1b0014b0d232/resourceGroups/rg-optscale-deployment/providers/Microsoft.Cache/redis/optscale-redis-cache-new",
+            "identity": [],
+            "location": "westus2",
+            "minimum_tls_version": "1.2",
+            "name": "optscale-redis-cache-new",
+            "non_ssl_port_enabled": false,
+            "patch_schedule": [],
+            "port": 6379,
+            "primary_access_key": "KGXIG4jhE56ArdcmTC41U8cB3a1laZ0hjAzCaGm5BqU=",
+            "primary_connection_string": "optscale-redis-cache-new.redis.cache.windows.net:6380,password=KGXIG4jhE56ArdcmTC41U8cB3a1laZ0hjAzCaGm5BqU=,ssl=true,abortConnect=False",
+            "private_static_ip_address": "",
+            "public_network_access_enabled": true,
+            "redis_configuration": [
+              {
+                "active_directory_authentication_enabled": false,
+                "aof_backup_enabled": false,
+                "aof_storage_connection_string_0": "",
+                "aof_storage_connection_string_1": "",
+                "authentication_enabled": true,
+                "data_persistence_authentication_method": "",
+                "enable_authentication": true,
+                "maxclients": 256,
+                "maxfragmentationmemory_reserved": 30,
+                "maxmemory_delta": 30,
+                "maxmemory_policy": "",
+                "maxmemory_reserved": 30,
+                "notify_keyspace_events": "",
+                "rdb_backup_enabled": false,
+                "rdb_backup_frequency": 0,
+                "rdb_backup_max_snapshot_count": 0,
+                "rdb_storage_connection_string": "",
+                "storage_account_subscription_id": ""
+              }
+            ],
+            "redis_version": "6.0",
+            "replicas_per_master": 0,
+            "replicas_per_primary": 0,
+            "resource_group_name": "rg-optscale-deployment",
+            "secondary_access_key": "gOuSOap0mUIfFnRK0gtvAMdtl0HloIajgAzCaNa6P2w=",
+            "secondary_connection_string": "optscale-redis-cache-new.redis.cache.windows.net:6380,password=gOuSOap0mUIfFnRK0gtvAMdtl0HloIajgAzCaNa6P2w=,ssl=true,abortConnect=False",
+            "shard_count": 0,
+            "sku_name": "Basic",
+            "ssl_port": 6380,
+            "subnet_id": "",
+            "tags": {
+              "environment": "prod",
+              "project": "optscale"
+            },
+            "tenant_settings": {},
+            "timeouts": null,
+            "zones": []
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "primary_access_key"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "primary_connection_string"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "redis_configuration"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "aof_storage_connection_string_0"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "redis_configuration"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "aof_storage_connection_string_1"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "redis_configuration"
+              },
+              {
+                "type": "index",
+                "value": {
+                  "value": 0,
+                  "type": "number"
+                }
+              },
+              {
+                "type": "get_attr",
+                "value": "rdb_storage_connection_string"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "secondary_access_key"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "secondary_connection_string"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxMDgwMDAwMDAwMDAwMCwiZGVsZXRlIjoxMDgwMDAwMDAwMDAwMCwicmVhZCI6MzAwMDAwMDAwMDAwLCJ1cGRhdGUiOjEwODAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiIxIn0=",
+          "dependencies": [
+            "azurerm_resource_group.optscale_rg"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.optscale_db_vm",
+      "mode": "managed",
+      "type": "azurerm_network_interface",
+      "name": "db_vm_nic",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 0,
+          "attributes": {
+            "accelerated_networking_enabled": false,
+            "applied_dns_servers": [],
+            "auxiliary_mode": "",
+            "auxiliary_sku": "",
+            "dns_servers": [],
+            "edge_zone": "",
+            "enable_accelerated_networking": false,
+            "enable_ip_forwarding": false,
+            "id": "/subscriptions/3c42098f-375b-47ae-9727-1b0014b0d232/resourceGroups/rg-optscale-deployment/providers/Microsoft.Network/networkInterfaces/optscale-db-vm-nic",
+            "internal_dns_name_label": "",
+            "internal_domain_name_suffix": "d4dmkzg3yjqejikafffkrcs3qb.xx.internal.cloudapp.net",
+            "ip_configuration": [
+              {
+                "gateway_load_balancer_frontend_ip_configuration_id": "",
+                "name": "internal",
+                "primary": true,
+                "private_ip_address": "10.20.2.4",
+                "private_ip_address_allocation": "Dynamic",
+                "private_ip_address_version": "IPv4",
+                "public_ip_address_id": "",
+                "subnet_id": "/subscriptions/3c42098f-375b-47ae-9727-1b0014b0d232/resourceGroups/rg-optscale-deployment/providers/Microsoft.Network/virtualNetworks/vnet-optscale-aks/subnets/snet-optscale-db"
+              }
+            ],
+            "ip_forwarding_enabled": false,
+            "location": "westus2",
+            "mac_address": "",
+            "name": "optscale-db-vm-nic",
+            "private_ip_address": "10.20.2.4",
+            "private_ip_addresses": [
+              "10.20.2.4"
+            ],
+            "resource_group_name": "rg-optscale-deployment",
+            "tags": {},
+            "timeouts": null,
+            "virtual_machine_id": ""
+          },
+          "sensitive_attributes": [],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjoxODAwMDAwMDAwMDAwLCJkZWxldGUiOjE4MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjoxODAwMDAwMDAwMDAwfX0=",
+          "dependencies": [
+            "azurerm_resource_group.optscale_rg",
+            "module.aks_networking.azurerm_subnet.db_subnet",
+            "module.aks_networking.azurerm_virtual_network.main"
+          ]
+        }
+      ]
+    },
+    {
+      "module": "module.optscale_storage",
+      "mode": "managed",
+      "type": "azurerm_storage_account",
+      "name": "main",
+      "provider": "provider[\"registry.terraform.io/hashicorp/azurerm\"]",
+      "instances": [
+        {
+          "schema_version": 4,
+          "attributes": {
+            "access_tier": "Hot",
+            "account_kind": "StorageV2",
+            "account_replication_type": "LRS",
+            "account_tier": "Standard",
+            "allow_nested_items_to_be_public": false,
+            "allowed_copy_scope": "",
+            "azure_files_authentication": [],
+            "blob_properties": [
+              {
+                "change_feed_enabled": false,
+                "change_feed_retention_in_days": 0,
+                "container_delete_retention_policy": [],
+                "cors_rule": [],
+                "default_service_version": "",
+                "delete_retention_policy": [],
+                "last_access_time_enabled": false,
+                "restore_policy": [],
+                "versioning_enabled": false
+              }
+            ],
+            "cross_tenant_replication_enabled": true,
+            "custom_domain": [],
+            "customer_managed_key": [],
+            "default_to_oauth_authentication": false,
+            "dns_endpoint_type": "Standard",
+            "edge_zone": "",
+            "enable_https_traffic_only": true,
+            "https_traffic_only_enabled": true,
+            "id": "/subscriptions/3c42098f-375b-47ae-9727-1b0014b0d232/resourceGroups/rg-optscale-deployment/providers/Microsoft.Storage/storageAccounts/optscalestorage",
+            "identity": [],
+            "immutability_policy": [],
+            "infrastructure_encryption_enabled": false,
+            "is_hns_enabled": false,
+            "large_file_share_enabled": false,
+            "local_user_enabled": true,
+            "location": "westus2",
+            "min_tls_version": "TLS1_2",
+            "name": "optscalestorage",
+            "network_rules": [],
+            "nfsv3_enabled": false,
+            "primary_access_key": "il50NJUgky0SrLrZc4aIpbV3FSF6OWVyn7ro0QcsykPSRhzaEYRDpkdEwoJ5cCfQPfpU8gh3BvbO+ASt+Q+LXQ==",
+            "primary_blob_connection_string": "DefaultEndpointsProtocol=https;BlobEndpoint=https://optscalestorage.blob.core.windows.net/;AccountName=optscalestorage;AccountKey=il50NJUgky0SrLrZc4aIpbV3FSF6OWVyn7ro0QcsykPSRhzaEYRDpkdEwoJ5cCfQPfpU8gh3BvbO+ASt+Q+LXQ==",
+            "primary_blob_endpoint": "https://optscalestorage.blob.core.windows.net/",
+            "primary_blob_host": "optscalestorage.blob.core.windows.net",
+            "primary_blob_internet_endpoint": "",
+            "primary_blob_internet_host": "",
+            "primary_blob_microsoft_endpoint": "",
+            "primary_blob_microsoft_host": "",
+            "primary_connection_string": "DefaultEndpointsProtocol=https;AccountName=optscalestorage;AccountKey=il50NJUgky0SrLrZc4aIpbV3FSF6OWVyn7ro0QcsykPSRhzaEYRDpkdEwoJ5cCfQPfpU8gh3BvbO+ASt+Q+LXQ==;EndpointSuffix=core.windows.net",
+            "primary_dfs_endpoint": "https://optscalestorage.dfs.core.windows.net/",
+            "primary_dfs_host": "optscalestorage.dfs.core.windows.net",
+            "primary_dfs_internet_endpoint": "",
+            "primary_dfs_internet_host": "",
+            "primary_dfs_microsoft_endpoint": "",
+            "primary_dfs_microsoft_host": "",
+            "primary_file_endpoint": "https://optscalestorage.file.core.windows.net/",
+            "primary_file_host": "optscalestorage.file.core.windows.net",
+            "primary_file_internet_endpoint": "",
+            "primary_file_internet_host": "",
+            "primary_file_microsoft_endpoint": "",
+            "primary_file_microsoft_host": "",
+            "primary_location": "westus2",
+            "primary_queue_endpoint": "https://optscalestorage.queue.core.windows.net/",
+            "primary_queue_host": "optscalestorage.queue.core.windows.net",
+            "primary_queue_microsoft_endpoint": "",
+            "primary_queue_microsoft_host": "",
+            "primary_table_endpoint": "https://optscalestorage.table.core.windows.net/",
+            "primary_table_host": "optscalestorage.table.core.windows.net",
+            "primary_table_microsoft_endpoint": "",
+            "primary_table_microsoft_host": "",
+            "primary_web_endpoint": "https://optscalestorage.z5.web.core.windows.net/",
+            "primary_web_host": "optscalestorage.z5.web.core.windows.net",
+            "primary_web_internet_endpoint": "",
+            "primary_web_internet_host": "",
+            "primary_web_microsoft_endpoint": "",
+            "primary_web_microsoft_host": "",
+            "public_network_access_enabled": true,
+            "queue_encryption_key_type": "Service",
+            "queue_properties": [
+              {
+                "cors_rule": [],
+                "hour_metrics": [
+                  {
+                    "enabled": false,
+                    "include_apis": false,
+                    "retention_policy_days": 0,
+                    "version": "1.0"
+                  }
+                ],
+                "logging": [
+                  {
+                    "delete": false,
+                    "read": false,
+                    "retention_policy_days": 0,
+                    "version": "1.0",
+                    "write": false
+                  }
+                ],
+                "minute_metrics": [
+                  {
+                    "enabled": false,
+                    "include_apis": false,
+                    "retention_policy_days": 0,
+                    "version": "1.0"
+                  }
+                ]
+              }
+            ],
+            "resource_group_name": "rg-optscale-deployment",
+            "routing": [],
+            "sas_policy": [],
+            "secondary_access_key": "ybm8cJkWXPQR2QkPycbnNptDntsuNtWJfANHg8DPKeSd6bJvqjRdbpjMMyNY6kajiE0dl/msvngg+AStDXDH8Q==",
+            "secondary_blob_connection_string": "",
+            "secondary_blob_endpoint": "",
+            "secondary_blob_host": "",
+            "secondary_blob_internet_endpoint": "",
+            "secondary_blob_internet_host": "",
+            "secondary_blob_microsoft_endpoint": "",
+            "secondary_blob_microsoft_host": "",
+            "secondary_connection_string": "DefaultEndpointsProtocol=https;AccountName=optscalestorage;AccountKey=ybm8cJkWXPQR2QkPycbnNptDntsuNtWJfANHg8DPKeSd6bJvqjRdbpjMMyNY6kajiE0dl/msvngg+AStDXDH8Q==;EndpointSuffix=core.windows.net",
+            "secondary_dfs_endpoint": "",
+            "secondary_dfs_host": "",
+            "secondary_dfs_internet_endpoint": "",
+            "secondary_dfs_internet_host": "",
+            "secondary_dfs_microsoft_endpoint": "",
+            "secondary_dfs_microsoft_host": "",
+            "secondary_file_endpoint": "",
+            "secondary_file_host": "",
+            "secondary_file_internet_endpoint": "",
+            "secondary_file_internet_host": "",
+            "secondary_file_microsoft_endpoint": "",
+            "secondary_file_microsoft_host": "",
+            "secondary_location": "",
+            "secondary_queue_endpoint": "",
+            "secondary_queue_host": "",
+            "secondary_queue_microsoft_endpoint": "",
+            "secondary_queue_microsoft_host": "",
+            "secondary_table_endpoint": "",
+            "secondary_table_host": "",
+            "secondary_table_microsoft_endpoint": "",
+            "secondary_table_microsoft_host": "",
+            "secondary_web_endpoint": "",
+            "secondary_web_host": "",
+            "secondary_web_internet_endpoint": "",
+            "secondary_web_internet_host": "",
+            "secondary_web_microsoft_endpoint": "",
+            "secondary_web_microsoft_host": "",
+            "sftp_enabled": false,
+            "share_properties": [
+              {
+                "cors_rule": [],
+                "retention_policy": [
+                  {
+                    "days": 7
+                  }
+                ],
+                "smb": []
+              }
+            ],
+            "shared_access_key_enabled": true,
+            "static_website": [],
+            "table_encryption_key_type": "Service",
+            "tags": {
+              "environment": "prod",
+              "project": "optscale"
+            },
+            "timeouts": null
+          },
+          "sensitive_attributes": [
+            [
+              {
+                "type": "get_attr",
+                "value": "primary_access_key"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "primary_blob_connection_string"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "primary_connection_string"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "secondary_access_key"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "secondary_blob_connection_string"
+              }
+            ],
+            [
+              {
+                "type": "get_attr",
+                "value": "secondary_connection_string"
+              }
+            ]
+          ],
+          "identity_schema_version": 0,
+          "private": "eyJlMmJmYjczMC1lY2FhLTExZTYtOGY4OC0zNDM2M2JjN2M0YzAiOnsiY3JlYXRlIjozNjAwMDAwMDAwMDAwLCJkZWxldGUiOjM2MDAwMDAwMDAwMDAsInJlYWQiOjMwMDAwMDAwMDAwMCwidXBkYXRlIjozNjAwMDAwMDAwMDAwfSwic2NoZW1hX3ZlcnNpb24iOiI0In0=",
+          "dependencies": [
+            "azurerm_resource_group.optscale_rg"
+          ]
+        }
+      ]
+    }
+  ],
+  "check_results": null
+}
